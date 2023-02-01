@@ -28,3 +28,28 @@
       - Para obter a key e fazer requests, você terá que fazer login e escolher
         o plano free. Seus dados de cartão de crédito não serão solicitados.
 */
+const currencyOneEl = document.querySelector('[data-js="currency-one"]')
+const currencyTwoEl = document.querySelector('[data-js="currency-two"]')
+
+const url = 'https://v6.exchangerate-api.com/v6/ed0327d1066a37c8f026c727/latest/USD'
+
+const fetchExchangeRate = async () => {
+  try{
+    const response = await fetch(url)
+
+    console.log(await response.json());
+  } catch (err){
+
+  }
+}
+
+fetchExchangeRate()
+
+const option = `<option> Oi </option>`
+
+currencyOneEl.innerHTML = option
+currencyTwoEl.innerHTML = option
+
+console.log(currencyOneEl, currencyTwoEl)
+
+
