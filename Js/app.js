@@ -33,13 +33,21 @@ const currencyTwoEl = document.querySelector('[data-js="currency-two"]')
 
 const url = 'https://v6.exchangerate-api.com/v6/ed0327d1066a37c8f026c727/latest/USD'
 
+const getErrormessage = errorType => ({
+  'unsupportede=code': 'A moeda não existe em nosso banco de dados.'
+})
+
 const fetchExchangeRate = async () => {
   try{
     const response = await fetch(url)
+    const exchangeRateData = await response.json()
+    
+    if (exchangeRateData.result === 'error') {
+      throw new Error ('Não foi possível obter as informações.')
+    }
 
-    const exchangeRateData = (await response.json());
   } catch (err){
-
+    alert(err.message)
   }
 }
 
