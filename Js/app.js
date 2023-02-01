@@ -37,7 +37,7 @@ const fetchExchangeRate = async () => {
   try{
     const response = await fetch(url)
 
-    console.log(await response.json());
+    const exchangeRateData = (await response.json());
   } catch (err){
 
   }
