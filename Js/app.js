@@ -30,34 +30,67 @@
 */
 const currencyOneEl = document.querySelector('[data-js="currency-one"]')
 const currencyTwoEl = document.querySelector('[data-js="currency-two"]')
+const currenciesEl = document.querySelector('[data-js="currencies-container"]')
 
 const url = 'https://v6.exchangerate-api.com/v6/ed0327d1066a37c8f026c727/latest/USD'
 
 const getErrorMessage = errorType => ({
-  'unsupportede-code': 'A moeda não existe em nosso banco de dados.'
-})[errorType]
+  'unsupported-code': 'A moeda não existe em nosso banco de dados.',
+  'malformed-request': 'Alguma parte da sua solicitação não segue a estrutura mostrada acima.',
+  'invalid-key': 'Sua chave de API não é válida',
+  'inactive-accoun': 'Seu endereço de e-mail não foi confirmado',
+  'quota-reached': 'Sua conta atingiu o número de solicitações permitidas pelo seu plano'
+
+})[errorType] || 'Não foi possível obter as informações'
 
 const fetchExchangeRate = async () => {
   try{
     const response = await fetch(url)
+
+    if (!response.OK) {
+      throw new Error('Sua conexão falhou. Não foi possível obter as informaçãoes.')
+    }
+
     const exchangeRateData = await response.json()
     
     if (exchangeRateData.result === 'error') {
-      throw new Error (getErrorMessage(exchangeRateData['error-type']))
+      throw new Error(getErrorMessage(exchangeRateData['error-type']))
     }
 
   } catch (err){
-    alert(err.message)
+   
+    const div = document.createElement('div')
+    const button = document.createElement('button')
+
+    div.textContent = err.message
+    div.setAttribute('role', 'alert')
+    div.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show')
+    button.classList.add('btn-close')
+    button.setAttribute('type', 'button')
+    button.setAttribute('attribute', 'close')
+    
+
+    div.appendChild(button)
+    currenciesEl.insertAdjacentElement('afterend', div)
+
+   
+    /* 
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      Mensagem do erro
+      <button type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+    */
+
   }
 }
 
 fetchExchangeRate()
 
-const option = `<option> Oi </option>`
+const option = `<option> oi </option>`
 
 currencyOneEl.innerHTML = option
 currencyTwoEl.innerHTML = option
 
-console.log(currencyOneEl, currencyTwoEl)
+
 
 
