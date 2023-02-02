@@ -47,7 +47,7 @@ const fetchExchangeRate = async () => {
   try{
     const response = await fetch(url)
 
-    if (!response.OK) {
+    if (!response.ok) {
       throw new Error('Sua conexão falhou. Não foi possível obter as informaçãoes.')
     }
 
