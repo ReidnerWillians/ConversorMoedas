@@ -67,19 +67,14 @@ const fetchExchangeRate = async () => {
     div.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show')
     button.classList.add('btn-close')
     button.setAttribute('type', 'button')
-    button.setAttribute('attribute', 'close')
+    button.setAttribute('aria-label', 'close')
     
+    button.addEventListener('click', () => {
+      div.remove()
+    })
 
     div.appendChild(button)
     currenciesEl.insertAdjacentElement('afterend', div)
-
-   
-    /* 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      Mensagem do erro
-      <button type="button" class="btn-close" aria-label="Close"></button>
-    </div>
-    */
 
   }
 }
