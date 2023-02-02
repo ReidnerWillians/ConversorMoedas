@@ -93,7 +93,7 @@ const init = async () => {
     .map(currency => `<option ${currency === selectedCurrency ? 'selected' : ''}>${currency}</option>`)
     .join('')
 
-  console.log(getOptions)
+ 
 
   currencyOneEl.innerHTML = getOptions('USD')
   currencyTwoEl.innerHTML = getOptions('BRL')
@@ -106,6 +106,12 @@ const init = async () => {
   convertedValueEl.textContent = (e.target
   .value * internalExchangeRate
   .conversion_rates[currencyTwoEl.value]).toFixed(2)
+
+  currencyTwoEl.addEventListener('input', e => {
+    const currencyTwoValue = internalExchangeRate.conversion_rates[e.target.value]
+
+    convertedValueEl.textContent = (timesCurrencytOneEl.value * currencyTwoValue).toFixed(2)
+  })
 })
 
 init()
